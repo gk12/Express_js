@@ -1,26 +1,19 @@
-const express=require("express");
-const app=express();
-var port=4000;
-// ye localhost 4000 pe hello gaurav likha huaa dikha dega
-app.get("/",(req,res)=>
-{
-    res.send("<h1>hello gaurav</h1>");
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
+const router = require("./UserRoutes");
+
+const app = express();
+const port = 4000;
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use("/api/v1", router);
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname + "/index.html"));
 });
 
-//if we  write localhost:4000/about the show about section
-app.get("/about",(req,res)=>
-{
-    res.send("<h1>about gaurav</h1>");
-});
-
-app.get("/contact",(req,res)=>
-{
-    res.send("<h1>contact gaurav</h1>");
-});
-
-//port number ko fetch ker rha hai or us port number pe chize dikha rha hai
-//server create ho gya hai port number 4000 pe
-app.listen(port,()=>{
-    console.log(`server is working on port: ${port}`);
-
+app.listen(port, () => {
+  console.log(`Server is Woring on port: ${port}`);
 });
